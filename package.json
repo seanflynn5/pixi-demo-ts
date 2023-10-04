@@ -17,6 +17,7 @@
         "typescript": "^5.2.2"
     },
     "devDependencies": {
+        "@types/matter-js": "^0.19.1",
         "babel-loader": "^8.2.5",
         "clean-webpack-plugin": "^4.0.0",
         "file-loader": "^6.2.0",

@@ -1,4 +1,5 @@
 import * as Matter from 'matter-js';
+import * as PIXI from "pixi.js"; 
 import { LabelScore } from "./LabelScore";
 import { App } from '../system/App';
 import { Background } from "./Background";
@@ -9,6 +10,13 @@ import { Leaderboard } from "./Leaderboard";
 import Scores from "../system/Scores.json";
 
 export class GameScene extends Scene {
+    private bg: Background;
+    private hero: Hero;
+    private platforms: Platforms;
+    private leaderboard: Leaderboard;
+    private labelScore: LabelScore;
+    private container: PIXI.Container;
+
     create() {
         this.createBackground();
         this.createHero();
@@ -16,11 +24,12 @@ export class GameScene extends Scene {
         this.setEvents();
         // Displays leaderboard
         this.showLeaderboard();
-        //[13]
+        // [13]
         this.createUI();
-        //[/13]
+        // [/13]
     }
-    //[13]
+
+    // [13]
     createUI() {
         this.labelScore = new LabelScore();
         this.container.addChild(this.labelScore);
@@ -28,13 +37,13 @@ export class GameScene extends Scene {
             this.labelScore.renderScore(this.hero.score);
         });
     }
-    //[13]
+    // [/13]
 
     setEvents() {
         Matter.Events.on(App.physics, 'collisionStart', this.onCollisionStart.bind(this));
     }
 
-    onCollisionStart(event) {
+    onCollisionStart(event: Matter.IEventCollision<Matter.Engine>) {
         const colliders = [event.pairs[0].bodyA, event.pairs[0].bodyB];
         const hero = colliders.find(body => body.gameHero);
         const platform = colliders.find(body => body.gamePlatform);
@@ -63,7 +72,7 @@ export class GameScene extends Scene {
         // Sets condition to check for new high score upon death
         this.hero.sprite.once("die", () => {
             Scores[this.hero.name] = this.hero.score;
-            const sortedScores = Object.entries(Scores).sort(([, scoreA], [, scoreB]) => scoreB - scoreA); 
+            const sortedScores = Object.entries(Scores).sort(([, scoreA], [, scoreB]) => scoreB - scoreA);
             if (this.hero.name === sortedScores[0][0]) {
                 this.hero.startFireworksAnimation();
                 this.hero.showNewHighScoreMessage();
@@ -90,7 +99,7 @@ export class GameScene extends Scene {
         this.container.addChild(this.platforms.container);
     }
 
-    update(dt) {
+    update(dt: number) {
         this.bg.update(dt);
         this.platforms.update(dt);
     }

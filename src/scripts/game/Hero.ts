@@ -2,9 +2,22 @@ import * as Matter from 'matter-js';
 import * as PIXI from "pixi.js";
 import gsap from 'gsap';
 import { App } from '../system/App';
+import { Platform } from './Platform'
 import Scores from "../system/Scores.json";
 
 export class Hero {
+    public sprite: PIXI.AnimatedSprite;
+    private body: Matter.Body;
+    private dy: number;
+    private maxJumps: number;
+    private jumpSpeed: number;
+    private jumpIndex: number;
+    private position: number;
+    private platform: Platform; 
+    public score: number;
+    public nameText: PIXI.Text;
+    public name: string;
+
     constructor() {
         this.createSprite();
         this.createBody();
@@ -16,11 +29,11 @@ export class Hero {
         this.score = 0;
         this.nameText = new PIXI.Text('', {
             fontFamily: "Verdana",
-            fontSize: 20, // Adjust the font size as needed
-            fill: "#FF6229", // Adjust the text color as needed
+            fontSize: 20, 
+            fill: "#FF6229", 
         });
         this.nameText.position.set(App.app.renderer.width - 10, 10);
-        this.nameText.anchor.set(1, 0); // Align to top-right
+        this.nameText.anchor.set(1, 0); 
         App.app.stage.addChild(this.nameText);
     }
 
@@ -28,10 +41,9 @@ export class Hero {
         const keys = Object.keys(Scores);
         const randomIndex = Math.floor(Math.random() * keys.length);
         this.name = keys[randomIndex];
-
     }
 
-    collectDiamond(diamond) {
+    collectDiamond(diamond: any) { // Define the type for 'diamond' as needed
         if (diamond.isDistinct) {
             this.score = this.score + 9;
             this.sprite.emit("score");
@@ -41,7 +53,6 @@ export class Hero {
         this.sprite.emit("score");
         diamond.destroy();
     }
-    //[/12]
 
     startJump() {
         if (this.platform || this.jumpIndex === 1) {
@@ -51,15 +62,13 @@ export class Hero {
         }
     }
 
-    // [08]
-    stayOnPlatform(platform) {
+    stayOnPlatform(platform: any) { // Define the type for 'platform' as needed
         this.platform = platform;
         this.jumpIndex = 0;
     }
-    // [/08]
 
     createBody() {
-        this.body = Matter.Bodies.rectangle(this.sprite.x + this.sprite.width / 2, this.sprite.y + this.sprite.height / 2, this.sprite.width, this.sprite.height, {friction: 0});
+        this.body = Matter.Bodies.rectangle(this.sprite.x + this.sprite.width / 2, this.sprite.y + this.sprite.height / 2, this.sprite.width, this.sprite.height, { friction: 0 });
         Matter.World.add(App.physics.world, this.body);
         this.body.gameHero = this;
     }
@@ -70,11 +79,9 @@ export class Hero {
 
         this.nameText.text = `Current Player: ${this.name}`;
 
-        // [14]
         if (this.sprite.y > window.innerHeight || (this.sprite.x + this.sprite.width < 0)) {
             this.sprite.emit("die");
         }
-        // [/14]
     }
 
     createSprite() {
@@ -190,7 +197,6 @@ export class Hero {
             },
         });
     }
-
 
     destroy() {
         App.app.ticker.remove(this.update, this);
