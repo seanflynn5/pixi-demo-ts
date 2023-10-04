@@ -2,10 +2,13 @@ import * as Matter from 'matter-js';
 import { App } from '../system/App';
 import * as PIXI from "pixi.js";
 
+export interface CustomDiamondBody extends Matter.Body {
+    gameDiamond?: Diamond;
+}
 export class Diamond {
     private isDistinct: boolean;
-    private sprite: PIXI.Sprite | null;
-    private body: Matter.Body | undefined;
+    public sprite: PIXI.Sprite | null;
+    private body: CustomDiamondBody | undefined;
 
     constructor(x: number, y: number) {
         this.isDistinct = Math.random() < 0.1; // 10% chance of being distinct

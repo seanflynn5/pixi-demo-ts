@@ -4,11 +4,56 @@ import { gsap } from "gsap";
 import { PixiPlugin } from "gsap/PixiPlugin";
 import { Loader } from "./Loader";
 import { Hero } from "../game/Hero";
+import { Diamond } from "../game/Diamond";
+import { Platform } from "../game/Platform";
 import { ScenesManager } from "./ScenesManager";
 
 export interface AppConfig {
     hero: Hero;
-    bgSpeed: number; // Define other properties as needed
+    bgSpeed: number;
+    score: ScoreCoords;
+    diamonds: DiamondProps
+    platforms: ExtendedPlatformProps;
+}
+
+interface DiamondProps extends Diamond {
+    offset: OffsetProps;
+    chance: number;
+}
+
+interface OffsetProps extends DiamondProps {
+    min: number;
+    max: number;
+}
+
+interface PlatformProps extends Platform {
+    moveSpeed: number;
+}
+
+type Ranges = {
+    rows: {
+        min: number;
+        max: number;
+    };
+    cols: {
+        min: number;
+        max: number;
+    };
+    offset: {
+        min: number;
+        max: number;
+    };
+};
+
+type ExtendedPlatformProps = PlatformProps & {
+    ranges: Ranges;
+};
+
+interface ScoreCoords extends AppConfig {
+    x: number;
+    y: number;
+    anchor: number;
+    style: PIXI.TextStyle;
 }
 
 export class Application {
@@ -16,7 +61,8 @@ export class Application {
     app: PIXI.Application;
     loader: Loader;
     scenes: ScenesManager;
-    physics: Matter.Engine; // You may need to import Matter.js types
+    physics: Matter.Engine; 
+    stage: PIXI.Container;
 
     constructor() {
         // Initialize properties

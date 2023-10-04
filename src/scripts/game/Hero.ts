@@ -5,14 +5,22 @@ import { App } from '../system/App';
 import { Platform } from './Platform'
 import Scores from "../system/Scores.json";
 
+export interface CustomHeroBody extends Matter.Body {
+    gameHero?: Hero;
+}
+
+interface HeroPosition extends Hero {
+    x: number;
+    y: number
+}
 export class Hero {
     public sprite: PIXI.AnimatedSprite;
-    private body: Matter.Body;
+    private body: CustomHeroBody;
     private dy: number;
     private maxJumps: number;
     private jumpSpeed: number;
     private jumpIndex: number;
-    private position: number;
+    private position: HeroPosition;
     private platform: Platform; 
     public score: number;
     public nameText: PIXI.Text;
@@ -89,6 +97,7 @@ export class Hero {
             App.res("walk1"),
             App.res("walk2")
         ]);
+        
 
         this.sprite.x = App.config.hero.position.x;
         this.sprite.y = App.config.hero.position.y;

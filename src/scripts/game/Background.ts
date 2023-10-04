@@ -3,7 +3,7 @@ import { App } from "../system/App";
 
 export class Background {
     private speed: number;
-    private container: PIXI.Container;
+    public container: PIXI.Container;
     private sprites: PIXI.Sprite[];
 
     constructor() {

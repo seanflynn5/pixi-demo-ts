@@ -8,6 +8,9 @@ import { Hero } from "./Hero";
 import { Platforms } from "./Platforms";
 import { Leaderboard } from "./Leaderboard";
 import Scores from "../system/Scores.json";
+import { CustomHeroBody } from './Hero';
+import { CustomPlatformBody } from './Platform';
+import { CustomDiamondBody } from './Diamond';
 
 export class GameScene extends Scene {
     private bg: Background;
@@ -45,17 +48,17 @@ export class GameScene extends Scene {
 
     onCollisionStart(event: Matter.IEventCollision<Matter.Engine>) {
         const colliders = [event.pairs[0].bodyA, event.pairs[0].bodyB];
-        const hero = colliders.find(body => body.gameHero);
-        const platform = colliders.find(body => body.gamePlatform);
+        const hero = colliders.find(body => (body as CustomHeroBody).gameHero);
+        const platform = colliders.find(body => (body as CustomPlatformBody).gamePlatform);
 
         if (hero && platform) {
-            this.hero.stayOnPlatform(platform.gamePlatform);
+            this.hero.stayOnPlatform((platform as CustomPlatformBody).gamePlatform);
         }
 
-        const diamond = colliders.find(body => body.gameDiamond);
+        const diamond = colliders.find(body => (body as CustomDiamondBody).gameDiamond);
 
         if (hero && diamond) {
-            this.hero.collectDiamond(diamond.gameDiamond);
+            this.hero.collectDiamond((diamond as CustomDiamondBody).gameDiamond);
         }
     }
 

@@ -2,7 +2,13 @@ import * as PIXI from "pixi.js";
 import { App } from "../system/App";
 import { Platform } from "./Platform";
 
+
 export class Platforms {
+    public platforms: Platform[];
+    public container: PIXI.Container;
+    public ranges: any; 
+    public current: Platform;
+
     constructor() {
         this.platforms = [];
         this.container = new PIXI.Container();
@@ -28,7 +34,7 @@ export class Platforms {
     }
 
     
-    createPlatform(data) {
+    createPlatform(data: { rows: number; cols: number; x: number }) {
         const platform = new Platform(data.rows, data.cols, data.x);
         this.container.addChild(platform.container);
         this.platforms.push(platform);
@@ -40,7 +46,7 @@ export class Platforms {
             this.createPlatform(this.randomData);
         }
 
-        // 06
+        // [14]
         this.platforms.forEach(platform => platform.move());
     }
 
