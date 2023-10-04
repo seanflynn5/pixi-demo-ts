@@ -1,19 +1,23 @@
 import * as Matter from 'matter-js';
 import * as PIXI from "pixi.js";
+import { Ticker } from "pixi.js"; 
 import { gsap } from "gsap";
 import { PixiPlugin } from "gsap/PixiPlugin";
 import { Loader } from "./Loader";
 import { Hero } from "../game/Hero";
 import { Diamond } from "../game/Diamond";
 import { Platform } from "../game/Platform";
+import { Scene } from "./Scene";
+import { LoaderConfig } from './Loader';
 import { ScenesManager } from "./ScenesManager";
 
 export interface AppConfig {
     hero: Hero;
     bgSpeed: number;
     score: ScoreCoords;
-    diamonds: DiamondProps
+    diamonds: DiamondProps;
     platforms: ExtendedPlatformProps;
+    scenes: Record<string, new () => Scene>;
 }
 
 interface DiamondProps extends Diamond {
@@ -63,9 +67,9 @@ export class Application {
     scenes: ScenesManager;
     physics: Matter.Engine; 
     stage: PIXI.Container;
+    ticker: Ticker;
 
     constructor() {
-        // Initialize properties
         this.config = {} as AppConfig;
         this.app = new PIXI.Application({ resizeTo: window });
         this.loader = new Loader(this.app.loader, this.config);

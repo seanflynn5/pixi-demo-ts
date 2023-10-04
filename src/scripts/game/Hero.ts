@@ -3,7 +3,7 @@ import * as PIXI from "pixi.js";
 import gsap from 'gsap';
 import { App } from '../system/App';
 import { Platform } from './Platform'
-import Scores from "../system/Scores.json";
+import { Scores } from "../system/Scores";
 
 export interface CustomHeroBody extends Matter.Body {
     gameHero?: Hero;

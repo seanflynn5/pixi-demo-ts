@@ -1,8 +1,7 @@
 import * as PIXI from 'pixi.js';
 import { App } from "../system/App";
-import Scores from "../system/Scores.json"; 
-// Define the type for the Scores JSON data
-type ScoresData = { [key: string]: number };
+import { Scores } from "../system/Scores"; 
+
 
 export class Leaderboard {
     public container: PIXI.Container;

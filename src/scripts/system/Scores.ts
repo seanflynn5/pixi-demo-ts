@@ -1,4 +1,8 @@
-{
+export type ScoresType = {
+    [key: string]: number;
+}
+
+export const Scores = {
     "Sean": 0,
     "Janie": 0,
     "Kat": 0,

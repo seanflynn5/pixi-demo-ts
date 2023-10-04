@@ -7,10 +7,11 @@ import { Scene } from '../system/Scene';
 import { Hero } from "./Hero";
 import { Platforms } from "./Platforms";
 import { Leaderboard } from "./Leaderboard";
-import Scores from "../system/Scores.json";
+import { Scores } from "../system/Scores";
 import { CustomHeroBody } from './Hero';
 import { CustomPlatformBody } from './Platform';
 import { CustomDiamondBody } from './Diamond';
+import { ScoresType } from '../system/Scores';
 
 export class GameScene extends Scene {
     private bg: Background;
@@ -18,7 +19,7 @@ export class GameScene extends Scene {
     private platforms: Platforms;
     private leaderboard: Leaderboard;
     private labelScore: LabelScore;
-    private container: PIXI.Container;
+    public container: PIXI.Container;
 
     create() {
         this.createBackground();
@@ -74,7 +75,7 @@ export class GameScene extends Scene {
         });
         // Sets condition to check for new high score upon death
         this.hero.sprite.once("die", () => {
-            Scores[this.hero.name] = this.hero.score;
+            (Scores as ScoresType)[this.hero.name] = this.hero.score;
             const sortedScores = Object.entries(Scores).sort(([, scoreA], [, scoreB]) => scoreB - scoreA);
             if (this.hero.name === sortedScores[0][0]) {
                 this.hero.startFireworksAnimation();
