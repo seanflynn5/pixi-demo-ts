@@ -14,11 +14,11 @@ import { CustomDiamondBody } from './Diamond';
 import { ScoresType } from '../system/Scores';
 
 export class GameScene extends Scene {
-    private bg: Background;
-    private hero: Hero;
-    private platforms: Platforms;
-    private leaderboard: Leaderboard;
-    private labelScore: LabelScore;
+    public bg: Background;
+    public hero: Hero;
+    public platforms: Platforms;
+    public leaderboard: Leaderboard;
+    public labelScore: LabelScore;
     public container: PIXI.Container;
 
     create() {

@@ -8,7 +8,6 @@ import { Hero } from "../game/Hero";
 import { Diamond } from "../game/Diamond";
 import { Platform } from "../game/Platform";
 import { Scene } from "./Scene";
-import { LoaderConfig } from './Loader';
 import { ScenesManager } from "./ScenesManager";
 
 export interface AppConfig {
@@ -20,12 +19,16 @@ export interface AppConfig {
     scenes: Record<string, new () => Scene>;
 }
 
-interface DiamondProps extends Diamond {
+export interface LoaderConfig extends AppConfig {
+    loader: { key: string; data: { default: string } }[];
+}
+
+ export interface DiamondProps extends Diamond {
     offset: OffsetProps;
     chance: number;
 }
 
-interface OffsetProps extends DiamondProps {
+export interface OffsetProps {
     min: number;
     max: number;
 }
@@ -53,15 +56,21 @@ type ExtendedPlatformProps = PlatformProps & {
     ranges: Ranges;
 };
 
-interface ScoreCoords extends AppConfig {
+interface ScoreCoords {
     x: number;
     y: number;
     anchor: number;
-    style: PIXI.TextStyle;
+    style: {
+        fontFamily: string,
+        fontWeight: string,
+        fontSize: number,
+        fill: Array<string>
+};
 }
 
 export class Application {
     config: AppConfig;
+    loaderConfig: LoaderConfig;
     app: PIXI.Application;
     loader: Loader;
     scenes: ScenesManager;
@@ -72,7 +81,7 @@ export class Application {
     constructor() {
         this.config = {} as AppConfig;
         this.app = new PIXI.Application({ resizeTo: window });
-        this.loader = new Loader(this.app.loader, this.config);
+        this.loader = new Loader(this.app.loader, this.loaderConfig);
         this.scenes = new ScenesManager();
         this.physics = Matter.Engine.create();
     }

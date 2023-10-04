@@ -6,9 +6,9 @@ export interface CustomDiamondBody extends Matter.Body {
     gameDiamond?: Diamond;
 }
 export class Diamond {
-    private isDistinct: boolean;
+    public isDistinct: boolean;
     public sprite: PIXI.Sprite | null;
-    private body: CustomDiamondBody | undefined;
+    public body: CustomDiamondBody | undefined;
 
     constructor(x: number, y: number) {
         this.isDistinct = Math.random() < 0.1; // 10% chance of being distinct
@@ -17,7 +17,7 @@ export class Diamond {
     }
 
     // using isDistinct flag to create special diamonds
-    private createSprite(x: number, y: number) {
+    createSprite(x: number, y: number) {
         if (this.isDistinct) {
             this.sprite = App.sprite("special-diamond");
             this.sprite.width = 60;
@@ -34,7 +34,7 @@ export class Diamond {
         }
     }
 
-    private update() {
+    update() {
         if (this.sprite) {
             Matter.Body.setPosition(this.body!, {
                 x: this.sprite.width / 2 + this.sprite.x + (this.sprite.parent ? this.sprite.parent.x : 0),

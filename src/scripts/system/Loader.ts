@@ -1,13 +1,12 @@
 import { Loader as PIXI_Loader, ILoaderResource } from 'pixi.js';
+import { LoaderConfig } from './App';
 
-export interface LoaderConfig {
-    loader: { key: string; data: { default: string } }[];
-}
+
 
 export class Loader {
-    public loader: PIXI_Loader;
-    public config: LoaderConfig;
-    public resources: { [key: string]: ILoaderResource };
+    loader: PIXI_Loader;
+    config: LoaderConfig;
+    resources: { [key: string]: ILoaderResource };
 
     constructor(loader: PIXI_Loader, config: LoaderConfig) {
         this.loader = loader;

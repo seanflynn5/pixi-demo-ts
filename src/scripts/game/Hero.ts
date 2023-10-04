@@ -9,19 +9,19 @@ export interface CustomHeroBody extends Matter.Body {
     gameHero?: Hero;
 }
 
-interface HeroPosition extends Hero {
+interface HeroPosition {
     x: number;
     y: number
 }
 export class Hero {
     public sprite: PIXI.AnimatedSprite;
-    private body: CustomHeroBody;
-    private dy: number;
-    private maxJumps: number;
-    private jumpSpeed: number;
-    private jumpIndex: number;
-    private position: HeroPosition;
-    private platform: Platform; 
+    public body: CustomHeroBody;
+    public dy: number;
+    public maxJumps: number;
+    public jumpSpeed: number;
+    public jumpIndex: number;
+    public position: HeroPosition;
+    public platform: Platform; 
     public score: number;
     public nameText: PIXI.Text;
     public name: string;
@@ -51,7 +51,7 @@ export class Hero {
         this.name = keys[randomIndex];
     }
 
-    collectDiamond(diamond: any) { // Define the type for 'diamond' as needed
+    collectDiamond(diamond: any) { 
         if (diamond.isDistinct) {
             this.score = this.score + 9;
             this.sprite.emit("score");
@@ -70,7 +70,7 @@ export class Hero {
         }
     }
 
-    stayOnPlatform(platform: any) { // Define the type for 'platform' as needed
+    stayOnPlatform(platform: any) { 
         this.platform = platform;
         this.jumpIndex = 0;
     }

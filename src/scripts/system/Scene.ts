@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { Ticker } from "pixi.js"; 
+import { Ticker } from "@pixi/ticker"; 
 import { App } from "./App";
 
 export class Scene {
@@ -23,6 +23,6 @@ export class Scene {
     }
 
     destroy() {
-        // Add your destroy logic here
+        
     }
 }
