@@ -13,7 +13,6 @@ export class Tools {
                 data: req(key)
             });
         });
-
         return files;
     }
 }

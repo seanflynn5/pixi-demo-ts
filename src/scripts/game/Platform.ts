@@ -21,6 +21,7 @@ export class Platform {
     
 
     constructor(rows: number, cols: number, x: number) {
+        this.diamonds = [];
         this.rows = rows;
         this.cols = cols;
         this.tileSize = PIXI.Texture.from("tile").width;

@@ -67,7 +67,6 @@ export class GameScene extends Scene {
         this.hero = new Hero();
         this.container.addChild(this.hero.sprite);
         this.hero.assignName();
-        console.log(this.hero.name)
 
         this.container.interactive = true;
         this.container.on("pointerdown", () => {
